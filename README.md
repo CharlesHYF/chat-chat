@@ -9,7 +9,7 @@
 
 ## 技术栈
 
-客户端：原生JDK
+客户端：原生Swing
 
 服务端：SpringBoot、MySQL、MyBatis-plus、Druid、Lombok、Jbcrypt、Log4J
 
