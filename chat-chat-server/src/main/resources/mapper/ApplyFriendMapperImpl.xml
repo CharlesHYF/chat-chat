@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.charles.server.mapper.ApplyFriendMapper">
+    <select id="getAppliFriendById" resultType="com.charles.server.entity.ApplyFriend">
+        SELECT *
+        FROM apply_friend
+        WHERE (apply_id = #{addUser,jdbcType=BIGINT}
+            AND
+               be_applied_id = #{beingAddedUser,jdbcType=BIGINT})
+           OR (apply_id = #{beingAddedUser,jdbcType=BIGINT}
+            AND
+               be_applied_id = #{addUser,jdbcType=BIGINT})
+    </select>
+
+    <update id="updateApplyFriend" parameterType="com.charles.server.entity.ApplyFriend">
+        UPDATE apply_friend
+        SET status = #{status,jdbcType=VARCHAR}
+        WHERE apply_id = #{applyId,jdbcType=BIGINT}
+          AND be_applied_id = #{beAppliedId,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteApply" parameterType="com.charles.server.entity.UserFriend">
+        DELETE
+        FROM apply_friend
+        WHERE (apply_id = #{add_user,jdbcType=BIGINT}
+            AND
+               be_applied_id
+                   = #{being_added_user,jdbcType=BIGINT}
+            )
+           OR (
+                    apply_id
+                    = #{being_added_user,jdbcType=BIGINT}
+                AND
+                    be_applied_id
+                        = #{add_user,jdbcType=BIGINT}
+            )
+    </delete>
+</mapper>

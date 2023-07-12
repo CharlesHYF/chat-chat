@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.charles.server.mapper.UserFriendMapper">
+    <select id="queryFriendIdList" resultType="com.charles.server.entity.vo.FriendId">
+        SELECT add_user, being_added_user, relation
+        FROM user_friend
+        WHERE add_user = #{userId,jdbcType=BIGINT}
+           OR being_added_user = #{userId,jdbcType=BIGINT};
+    </select>
+    
+    <select id="getRelation" resultType="integer">
+        SELECT relation
+        FROM user_friend
+        WHERE (add_user = #{param1,jdbcType=BIGINT}
+            AND
+               being_added_user = #{param2,jdbcType=BIGINT})
+           OR (add_user = #{param2,jdbcType=BIGINT}
+            AND
+               being_added_user = #{param1,jdbcType=BIGINT})
+    </select>
+    
+    <update id="changeRelation" parameterType="com.charles.server.entity.model.ChangeRelation">
+        UPDATE user_friend
+        SET relation = #{relation,jdbcType=INTEGER}
+        WHERE (add_user =
+               #{userId,jdbcType=BIGINT}
+            AND
+               being_added_user
+                   =
+               #{beChangedUserId,jdbcType=BIGINT}
+            )
+           OR (
+                    add_user
+                    =
+                    #{beChangedUserId,jdbcType=BIGINT}
+                AND
+                    being_added_user
+                        =
+                    #{userId,jdbcType=BIGINT}
+            )
+    </update>
+    
+    <delete id="deleteFriend" parameterType="com.charles.server.entity.UserFriend">
+        DELETE
+        FROM user_friend
+        WHERE (add_user =
+               #{add_user,jdbcType=BIGINT}
+            AND
+               being_added_user
+                   =
+               #{being_added_user,jdbcType=BIGINT}
+            )
+           OR (
+                    add_user
+                    =
+                    #{being_added_user,jdbcType=BIGINT}
+                AND
+                    being_added_user
+                        =
+                    #{add_user,jdbcType=BIGINT}
+            )
+    </delete>
+</mapper>

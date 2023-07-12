@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.charles.server.mapper.ChatContentMapper">
+    <select id="getContents" resultType="com.charles.server.entity.ChatContent">
+        SELECT *
+        FROM chat_content
+        WHERE (send_id = #{param1,jdbcType=BIGINT}
+                AND
+               receive_id = #{param2,jdbcType=BIGINT})
+           OR (send_id = #{param2,jdbcType=BIGINT}
+                AND
+               receive_id = #{param1,jdbcType=BIGINT})
+    </select>
+
+    <select id="getGroupContents" resultType="com.charles.server.entity.ChatContent">
+        SELECT *
+        FROM chat_content
+        WHERE 
+            group_id = #{groupId,jdbcType=BIGINT}
+    </select>
+</mapper>
