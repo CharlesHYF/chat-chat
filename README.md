@@ -54,6 +54,8 @@
 ![1689147182110](README.assets/1689147182110.png)
 
 
+## 启动
+导入chat-chat.sql数据库文件后，进入chat-chat-server/src/main/resources/application.yaml修改数据库配置，直接运行两个模块即可。
 
 ## 注意事项
 
